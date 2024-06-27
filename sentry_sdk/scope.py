@@ -237,7 +237,7 @@ class Scope(object):
         Creates a new propagation context and sets it as `_propagation_context`. Overwriting existing one.
         """
         self._propagation_context = self._create_new_propagation_context()
-        logger.debug(
+        print('sentry-debug', __name__,
             "[Tracing] Create new propagation context: %s",
             self._propagation_context,
         )
@@ -254,7 +254,7 @@ class Scope(object):
 
             if context is not None:
                 self._propagation_context = context
-                logger.debug(
+                print('sentry-debug', __name__,
                     "[Tracing] Extracted propagation context from incoming data: %s",
                     self._propagation_context,
                 )

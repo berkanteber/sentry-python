@@ -107,7 +107,7 @@ def _install_httplib():
 
         if should_propagate_trace(hub, real_url):
             for key, value in hub.iter_trace_propagation_headers(span):
-                logger.debug(
+                print('sentry-debug', __name__,
                     "[Tracing] Adding `{key}` header {value} to outgoing request to {real_url}.".format(
                         key=key, value=value, real_url=real_url
                     )

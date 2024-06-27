@@ -47,11 +47,11 @@ class AtexitIntegration(Integration):
         @atexit.register
         def _shutdown():
             # type: () -> None
-            logger.debug("atexit: got shutdown signal")
+            print('sentry-debug', __name__, "atexit: got shutdown signal")
             hub = Hub.main
             integration = hub.get_integration(AtexitIntegration)
             if integration is not None:
-                logger.debug("atexit: shutting down client")
+                print('sentry-debug', __name__, "atexit: shutting down client")
 
                 # If there is a session on the hub, close it now.
                 hub.end_session()

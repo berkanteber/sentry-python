@@ -82,14 +82,14 @@ class Monitor(object):
         # type: () -> None
         if self._healthy:
             if self._downsample_factor > 0:
-                logger.debug(
+                print('sentry-debug', __name__,
                     "[Monitor] health check positive, reverting to normal sampling"
                 )
             self._downsample_factor = 0
         else:
             if self.downsample_factor < MAX_DOWNSAMPLE_FACTOR:
                 self._downsample_factor += 1
-            logger.debug(
+            print('sentry-debug', __name__,
                 "[Monitor] health check negative, downsampling with a factor of %d",
                 self._downsample_factor,
             )

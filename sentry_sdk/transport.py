@@ -393,7 +393,7 @@ class HttpTransport(Transport):
                 f.write(json_dumps(event))
 
         assert self.parsed_dsn is not None
-        logger.debug(
+        print('sentry-debug', __name__,
             "Sending event, type:%s level:%s event_id:%s project:%s host:%s"
             % (
                 event.get("type") or "null",
@@ -454,7 +454,7 @@ class HttpTransport(Transport):
                 envelope.serialize_into(f)
 
         assert self.parsed_dsn is not None
-        logger.debug(
+        print('sentry-debug', __name__,
             "Sending envelope [%s] project:%s host:%s",
             envelope.description,
             self.parsed_dsn.project_id,
@@ -601,7 +601,7 @@ class HttpTransport(Transport):
         callback=None,  # type: Optional[Any]
     ):
         # type: (...) -> None
-        logger.debug("Flushing HTTP transport")
+        print('sentry-debug', __name__, "Flushing HTTP transport")
 
         if timeout > 0:
             self._worker.submit(lambda: self._flush_client_reports(force=True))
@@ -609,7 +609,7 @@ class HttpTransport(Transport):
 
     def kill(self):
         # type: () -> None
-        logger.debug("Killing HTTP transport")
+        print('sentry-debug', __name__, "Killing HTTP transport")
         self._worker.kill()
 
 

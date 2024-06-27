@@ -187,7 +187,7 @@ class SentryAsgiMiddleware:
                             name=transaction_name,
                             source=transaction_source,
                         )
-                        logger.debug(
+                        print('sentry-debug', __name__,
                             "[ASGI] Created transaction (continuing trace): %s",
                             transaction,
                         )
@@ -197,12 +197,12 @@ class SentryAsgiMiddleware:
                             name=transaction_name,
                             source=transaction_source,
                         )
-                        logger.debug(
+                        print('sentry-debug', __name__,
                             "[ASGI] Created transaction (new): %s", transaction
                         )
 
                     transaction.set_tag("asgi.type", ty)
-                    logger.debug(
+                    print('sentry-debug', __name__,
                         "[ASGI] Set transaction name and source on transaction: '%s' / '%s'",
                         transaction.name,
                         transaction.source,
@@ -211,7 +211,7 @@ class SentryAsgiMiddleware:
                     with hub.start_transaction(
                         transaction, custom_sampling_context={"asgi_scope": scope}
                     ):
-                        logger.debug("[ASGI] Started transaction: %s", transaction)
+                        print('sentry-debug', __name__, "[ASGI] Started transaction: %s", transaction)
                         try:
 
                             async def _sentry_wrapped_send(event):
@@ -262,7 +262,7 @@ class SentryAsgiMiddleware:
             event["transaction"] = name
             event["transaction_info"] = {"source": source}
 
-            logger.debug(
+            print('sentry-debug', __name__,
                 "[ASGI] Set transaction name and source in event_processor: '%s' / '%s'",
                 event["transaction"],
                 event["transaction_info"]["source"],

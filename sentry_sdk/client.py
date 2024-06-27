@@ -211,7 +211,7 @@ class _Client(object):
                 module_obj = import_module(module_name)
                 function_obj = getattr(module_obj, function_name)
                 setattr(module_obj, function_name, trace(function_obj))
-                logger.debug("Enabled tracing for %s", function_qualname)
+                print('sentry-debug', __name__, "Enabled tracing for %s", function_qualname)
 
             except module_not_found_error:
                 try:
@@ -230,7 +230,7 @@ class _Client(object):
 
                     setattr(class_obj, function_name, traced_function)
                     setattr(module_obj, class_name, class_obj)
-                    logger.debug("Enabled tracing for %s", function_qualname)
+                    print('sentry-debug', __name__, "Enabled tracing for %s", function_qualname)
 
                 except Exception as e:
                     logger.warning(
@@ -295,7 +295,7 @@ class _Client(object):
                 )
 
             if self.options["_experiments"].get("otel_powered_performance", False):
-                logger.debug(
+                print('sentry-debug', __name__,
                     "[OTel] Enabling experimental OTel-powered performance monitoring."
                 )
                 self.options["instrumenter"] = INSTRUMENTER.OTEL
@@ -317,13 +317,13 @@ class _Client(object):
 
             sdk_name = get_sdk_name(list(self.integrations.keys()))
             SDK_INFO["name"] = sdk_name
-            logger.debug("Setting SDK name to '%s'", sdk_name)
+            print('sentry-debug', __name__, "Setting SDK name to '%s'", sdk_name)
 
             if has_profiling_enabled(self.options):
                 try:
                     setup_profiler(self.options)
                 except Exception as e:
-                    logger.debug("Can not set up profiler. (%s)", e)
+                    print('sentry-debug', __name__, "Can not set up profiler. (%s)", e)
 
         finally:
             _client_init_debug.set(old_debug)

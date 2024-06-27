@@ -45,7 +45,7 @@ def _generate_default_integrations_iterator(
                 module, cls = import_string.rsplit(".", 1)
                 yield getattr(import_module(module), cls)
             except (DidNotEnable, SyntaxError) as e:
-                logger.debug(
+                print('sentry-debug', __name__,
                     "Did not import default integration %s: %s", import_string, e
                 )
 
@@ -111,7 +111,7 @@ def setup_integrations(
         (integration.identifier, integration) for integration in integrations or ()
     )
 
-    logger.debug("Setting up integrations (with default = %s)", with_defaults)
+    print('sentry-debug', __name__, "Setting up integrations (with default = %s)", with_defaults)
 
     # Integrations that are not explicitly set up by the user.
     used_as_default_integration = set()
@@ -128,7 +128,7 @@ def setup_integrations(
     for identifier, integration in iteritems(integrations):
         with _installer_lock:
             if identifier not in _processed_integrations:
-                logger.debug(
+                print('sentry-debug', __name__,
                     "Setting up previously not enabled integration %s", identifier
                 )
                 try:
@@ -147,7 +147,7 @@ def setup_integrations(
                     if identifier not in used_as_default_integration:
                         raise
 
-                    logger.debug(
+                    print('sentry-debug', __name__,
                         "Did not enable default integration %s: %s", identifier, e
                     )
                 else:
@@ -162,7 +162,7 @@ def setup_integrations(
     }
 
     for identifier in integrations:
-        logger.debug("Enabling integration %s", identifier)
+        print('sentry-debug', __name__, "Enabling integration %s", identifier)
 
     return integrations
 

@@ -68,7 +68,7 @@ def _install_httpx_client():
 
             if should_propagate_trace(hub, str(request.url)):
                 for key, value in hub.iter_trace_propagation_headers():
-                    logger.debug(
+                    print('sentry-debug', __name__,
                         "[Tracing] Adding `{key}` header {value} to outgoing request to {url}.".format(
                             key=key, value=value, url=request.url
                         )
@@ -121,7 +121,7 @@ def _install_httpx_async_client():
 
             if should_propagate_trace(hub, str(request.url)):
                 for key, value in hub.iter_trace_propagation_headers():
-                    logger.debug(
+                    print('sentry-debug', __name__,
                         "[Tracing] Adding `{key}` header {value} to outgoing request to {url}.".format(
                             key=key, value=value, url=request.url
                         )

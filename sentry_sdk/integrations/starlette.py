@@ -668,7 +668,7 @@ def _set_transaction_name_and_source(scope, transaction_style, request):
         source = TRANSACTION_SOURCE_ROUTE
 
     scope.set_transaction_name(name, source=source)
-    logger.debug(
+    print('sentry-debug', __name__,
         "[Starlette] Set transaction name and source on scope: %s / %s", name, source
     )
 

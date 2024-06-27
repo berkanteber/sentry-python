@@ -219,7 +219,7 @@ def create_trace_config():
 
         if should_propagate_trace(hub, str(params.url)):
             for key, value in hub.iter_trace_propagation_headers(span):
-                logger.debug(
+                print('sentry-debug', __name__,
                     "[Tracing] Adding `{key}` header {value} to outgoing request to {url}.".format(
                         key=key, value=value, url=params.url
                     )

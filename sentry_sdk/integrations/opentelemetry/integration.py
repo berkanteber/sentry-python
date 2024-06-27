@@ -67,7 +67,7 @@ class OpenTelemetryIntegration(Integration):
 
         _setup_sentry_tracing()
 
-        logger.debug("[OTel] Finished setting up OpenTelemetry integration")
+        print('sentry-debug', __name__, "[OTel] Finished setting up OpenTelemetry integration")
 
 
 def _record_unpatched_classes():
@@ -87,7 +87,7 @@ def _record_unpatched_classes():
             try:
                 original_cls = _import_by_path(orig_path)
             except (AttributeError, ImportError):
-                logger.debug("[OTel] Failed to import %s", orig_path)
+                print('sentry-debug', __name__, "[OTel] Failed to import %s", orig_path)
                 continue
 
             original_classes[package] = original_cls
@@ -121,7 +121,7 @@ def _patch_remaining_classes(original_classes):
         try:
             cls = _import_by_path(original_path)
         except (AttributeError, ImportError):
-            logger.debug(
+            print('sentry-debug', __name__,
                 "[OTel] Failed to check if class has been instrumented: %s",
                 original_path,
             )
@@ -148,7 +148,7 @@ def _patch_remaining_classes(original_classes):
         for package, original_cls in original_classes.items():
             for var_name, var in vars(module).copy().items():
                 if var == original_cls:
-                    logger.debug(
+                    print('sentry-debug', __name__,
                         "[OTel] Additionally patching %s from %s",
                         original_cls,
                         module_name,

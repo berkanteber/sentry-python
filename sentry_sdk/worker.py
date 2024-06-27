@@ -80,24 +80,24 @@ class BackgroundWorker(object):
         Kill worker thread. Returns immediately. Not useful for
         waiting on shutdown for events, use `flush` for that.
         """
-        logger.debug("background worker got kill request")
+        print('sentry-debug', __name__, "background worker got kill request")
         with self._lock:
             if self._thread:
                 try:
                     self._queue.put_nowait(_TERMINATOR)
                 except FullError:
-                    logger.debug("background worker queue full, kill failed")
+                    print('sentry-debug', __name__, "background worker queue full, kill failed")
 
                 self._thread = None
                 self._thread_for_pid = None
 
     def flush(self, timeout, callback=None):
         # type: (float, Optional[Any]) -> None
-        logger.debug("background worker got flush request")
+        print('sentry-debug', __name__, "background worker got flush request")
         with self._lock:
             if self.is_alive and timeout > 0.0:
                 self._wait_flush(timeout, callback)
-        logger.debug("background worker flushed")
+        print('sentry-debug', __name__, "background worker flushed")
 
     def full(self):
         # type: () -> bool
@@ -108,7 +108,7 @@ class BackgroundWorker(object):
         initial_timeout = min(0.1, timeout)
         if not self._timed_queue_join(initial_timeout):
             pending = self._queue.qsize() + 1
-            logger.debug("%d event(s) pending on flush", pending)
+            print('sentry-debug', __name__, "%d event(s) pending on flush", pending)
             if callback is not None:
                 callback(pending, timeout)
 
