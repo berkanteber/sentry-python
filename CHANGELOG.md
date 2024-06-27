@@ -1335,7 +1335,7 @@ By: @mgaligniana (#1773)
       ],
   )
 
-  logger.debug("I am ignored")
+  print('sentry-debug', __name__, "I am ignored")
   logger.info("I am a breadcrumb")
   logger.error("I am an event", extra=dict(bar=43))
   logger.exception("An exception happened")

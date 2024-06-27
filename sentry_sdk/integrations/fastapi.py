@@ -65,7 +65,7 @@ def _set_transaction_name_and_source(scope, transaction_style, request):
         source = SOURCE_FOR_STYLE[transaction_style]
 
     scope.set_transaction_name(name, source=source)
-    logger.debug(
+    print('sentry-debug', __name__,
         "[FastAPI] Set transaction name and source on scope: %s / %s", name, source
     )
 

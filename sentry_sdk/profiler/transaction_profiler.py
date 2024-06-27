@@ -143,7 +143,7 @@ def setup_profiler(options):
     global _scheduler
 
     if _scheduler is not None:
-        logger.debug("[Profiling] Profiler is already setup")
+        print('sentry-debug', __name__, "[Profiling] Profiler is already setup")
         return False
 
     frequency = DEFAULT_SAMPLING_FREQUENCY
@@ -179,7 +179,7 @@ def setup_profiler(options):
     else:
         raise ValueError("Unknown profiler mode: {}".format(profiler_mode))
 
-    logger.debug(
+    print('sentry-debug', __name__,
         "[Profiling] Setting up profiler in {mode} mode".format(mode=_scheduler.mode)
     )
     _scheduler.setup()
@@ -243,7 +243,7 @@ class Profile:
     def update_active_thread_id(self):
         # type: () -> None
         self.active_thread_id = get_current_thread_meta()[0]
-        logger.debug(
+        print('sentry-debug', __name__,
             "[Profiling] updating active thread id to {tid}".format(
                 tid=self.active_thread_id
             )
@@ -264,7 +264,7 @@ class Profile:
         # The corresponding transaction was not sampled,
         # so don't generate a profile for it.
         if not self.sampled:
-            logger.debug(
+            print('sentry-debug', __name__,
                 "[Profiling] Discarding profile because transaction is discarded."
             )
             self.sampled = False
@@ -272,7 +272,7 @@ class Profile:
 
         # The profiler hasn't been properly initialized.
         if self.scheduler is None:
-            logger.debug(
+            print('sentry-debug', __name__,
                 "[Profiling] Discarding profile because profiler was not started."
             )
             self.sampled = False
@@ -295,7 +295,7 @@ class Profile:
         # The profiles_sample_rate option was not set, so profiling
         # was never enabled.
         if sample_rate is None:
-            logger.debug(
+            print('sentry-debug', __name__,
                 "[Profiling] Discarding profile because profiling was not enabled."
             )
             self.sampled = False
@@ -314,9 +314,9 @@ class Profile:
         self.sampled = random.random() < float(sample_rate)
 
         if self.sampled:
-            logger.debug("[Profiling] Initializing profile")
+            print('sentry-debug', __name__, "[Profiling] Initializing profile")
         else:
-            logger.debug(
+            print('sentry-debug', __name__,
                 "[Profiling] Discarding profile because it's not included in the random sample (sample rate = {sample_rate})".format(
                     sample_rate=float(sample_rate)
                 )
@@ -328,7 +328,7 @@ class Profile:
             return
 
         assert self.scheduler, "No scheduler specified"
-        logger.debug("[Profiling] Starting profile")
+        print('sentry-debug', __name__, "[Profiling] Starting profile")
         self.active = True
         if not self.start_ns:
             self.start_ns = nanosecond_time()
@@ -340,7 +340,7 @@ class Profile:
             return
 
         assert self.scheduler, "No scheduler specified"
-        logger.debug("[Profiling] Stopping profile")
+        print('sentry-debug', __name__, "[Profiling] Stopping profile")
         self.active = False
         self.stop_ns = nanosecond_time()
 
@@ -501,7 +501,7 @@ class Profile:
                 client.transport.record_lost_event(
                     "insufficient_data", data_category="profile"
                 )
-            logger.debug("[Profiling] Discarding profile because insufficient samples.")
+            print('sentry-debug', __name__, "[Profiling] Discarding profile because insufficient samples.")
             return False
 
         return True

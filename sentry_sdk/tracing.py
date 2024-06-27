@@ -841,9 +841,9 @@ class Transaction(Span):
         if self._span_recorder is None:
             # Explicit check against False needed because self.sampled might be None
             if self.sampled is False:
-                logger.debug("Discarding transaction because sampled = False")
+                print('sentry-debug', __name__, "Discarding transaction because sampled = False")
             else:
-                logger.debug(
+                print('sentry-debug', __name__,
                     "Discarding transaction because it was not started with sentry_sdk.start_transaction"
                 )
 
@@ -1040,7 +1040,7 @@ class Transaction(Span):
         # if the function returned 0 (or false), or if `traces_sample_rate` is
         # 0, it's a sign the transaction should be dropped
         if not self.sample_rate:
-            logger.debug(
+            print('sentry-debug', __name__,
                 "[Tracing] Discarding {transaction_description} because {reason}".format(
                     transaction_description=transaction_description,
                     reason=(
@@ -1059,13 +1059,13 @@ class Transaction(Span):
         self.sampled = random.random() < self.sample_rate
 
         if self.sampled:
-            logger.debug(
+            print('sentry-debug', __name__,
                 "[Tracing] Starting {transaction_description}".format(
                     transaction_description=transaction_description,
                 )
             )
         else:
-            logger.debug(
+            print('sentry-debug', __name__,
                 "[Tracing] Discarding {transaction_description} because it's not included in the random sample (sampling rate = {sample_rate})".format(
                     transaction_description=transaction_description,
                     sample_rate=self.sample_rate,

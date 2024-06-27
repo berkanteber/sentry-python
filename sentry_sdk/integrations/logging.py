@@ -87,6 +87,12 @@ class LoggingIntegration(Integration):
         # type: () -> None
         old_callhandlers = logging.Logger.callHandlers
 
+        integration = sentry_sdk.get_client().get_integration(LoggingIntegration)
+        if integration is not None:
+            print('sentry-debug', __name__, integration._handler, integration._breadcrumb_handler)
+        else:
+            print('sentry-debug', __name__, 'integration is None')
+
         def sentry_patched_callhandlers(self, record):
             # type: (Any, LogRecord) -> Any
             # keeping a local reference because the
@@ -94,8 +100,10 @@ class LoggingIntegration(Integration):
             ignored_loggers = _IGNORED_LOGGERS
 
             try:
+                print('sentry-debug', __name__, 'integration in try')
                 return old_callhandlers(self, record)
             finally:
+                print('sentry-debug', __name__, 'integration in finally')
                 # This check is done twice, once also here before we even get
                 # the integration.  Otherwise we have a high chance of getting
                 # into a recursion error when the integration is resolved
@@ -105,7 +113,10 @@ class LoggingIntegration(Integration):
                         LoggingIntegration
                     )
                     if integration is not None:
+                        print('sentry-debug', __name__, integration._handler, integration._breadcrumb_handler)
                         integration._handle_record(record)
+                    else:
+                        print('sentry-debug', __name__, 'integration is None')
 
         logging.Logger.callHandlers = sentry_patched_callhandlers  # type: ignore
 

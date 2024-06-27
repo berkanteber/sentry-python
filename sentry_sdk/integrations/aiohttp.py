@@ -222,7 +222,7 @@ def create_trace_config():
             for key, value in Scope.get_current_scope().iter_trace_propagation_headers(
                 span=span
             ):
-                logger.debug(
+                print('sentry-debug', __name__,
                     "[Tracing] Adding `{key}` header {value} to outgoing request to {url}.".format(
                         key=key, value=value, url=params.url
                     )

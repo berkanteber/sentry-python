@@ -70,7 +70,7 @@ def setup_continuous_profiler(options, capture_func):
     global _scheduler
 
     if _scheduler is not None:
-        logger.debug("[Profiling] Continuous Profiler is already setup")
+        print('sentry-debug', __name__, "[Profiling] Continuous Profiler is already setup")
         return False
 
     if is_gevent():
@@ -97,7 +97,7 @@ def setup_continuous_profiler(options, capture_func):
     else:
         raise ValueError("Unknown continuous profiler mode: {}".format(profiler_mode))
 
-    logger.debug(
+    print('sentry-debug', __name__,
         "[Profiling] Setting up continuous profiler in {mode} mode".format(
             mode=_scheduler.mode
         )

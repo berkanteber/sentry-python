@@ -72,7 +72,7 @@ def _install_httpx_client():
                     key,
                     value,
                 ) in Scope.get_current_scope().iter_trace_propagation_headers():
-                    logger.debug(
+                    print('sentry-debug', __name__,
                         "[Tracing] Adding `{key}` header {value} to outgoing request to {url}.".format(
                             key=key, value=value, url=request.url
                         )
@@ -128,7 +128,7 @@ def _install_httpx_async_client():
                     key,
                     value,
                 ) in Scope.get_current_scope().iter_trace_propagation_headers():
-                    logger.debug(
+                    print('sentry-debug', __name__,
                         "[Tracing] Adding `{key}` header {value} to outgoing request to {url}.".format(
                             key=key, value=value, url=request.url
                         )

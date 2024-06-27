@@ -59,7 +59,7 @@ class _SentryDistro(BaseDistro):  # type: ignore[misc]
                 kwargs[key] = value
 
         instrumentor().instrument(**kwargs)
-        logger.debug(
+        print('sentry-debug', __name__,
             "[OTel] %s instrumented (%s)",
             entry_point.name,
             ", ".join([f"{k}: {v}" for k, v in kwargs.items()]),

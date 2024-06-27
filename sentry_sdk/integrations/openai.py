@@ -38,7 +38,7 @@ try:
         # type: (str) -> int
         return len(enc.encode_ordinary(s))
 
-    logger.debug("[OpenAI] using tiktoken to count tokens")
+    print('sentry-debug', __name__, "[OpenAI] using tiktoken to count tokens")
 except ImportError:
     logger.info(
         "The Sentry Python SDK requires 'tiktoken' in order to measure token usage from some OpenAI APIs"

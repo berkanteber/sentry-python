@@ -220,7 +220,7 @@ def _setup_celery_beat_signals(monitor_beat_tasks):
 
 def crons_task_success(sender, **kwargs):
     # type: (Task, dict[Any, Any]) -> None
-    logger.debug("celery_task_success %s", sender)
+    print('sentry-debug', __name__, "celery_task_success %s", sender)
     headers = _get_headers(sender)
 
     if "sentry-monitor-slug" not in headers:
@@ -241,7 +241,7 @@ def crons_task_success(sender, **kwargs):
 
 def crons_task_failure(sender, **kwargs):
     # type: (Task, dict[Any, Any]) -> None
-    logger.debug("celery_task_failure %s", sender)
+    print('sentry-debug', __name__, "celery_task_failure %s", sender)
     headers = _get_headers(sender)
 
     if "sentry-monitor-slug" not in headers:
@@ -262,7 +262,7 @@ def crons_task_failure(sender, **kwargs):
 
 def crons_task_retry(sender, **kwargs):
     # type: (Task, dict[Any, Any]) -> None
-    logger.debug("celery_task_retry %s", sender)
+    print('sentry-debug', __name__, "celery_task_retry %s", sender)
     headers = _get_headers(sender)
 
     if "sentry-monitor-slug" not in headers:

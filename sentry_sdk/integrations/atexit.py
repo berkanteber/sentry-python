@@ -47,10 +47,10 @@ class AtexitIntegration(Integration):
         @ensure_integration_enabled(AtexitIntegration)
         def _shutdown():
             # type: () -> None
-            logger.debug("atexit: got shutdown signal")
+            print('sentry-debug', __name__, "atexit: got shutdown signal")
             client = sentry_sdk.get_client()
             integration = client.get_integration(AtexitIntegration)
 
-            logger.debug("atexit: shutting down client")
+            print('sentry-debug', __name__, "atexit: shutting down client")
             Scope.get_isolation_scope().end_session()
             client.close(callback=integration.callback)

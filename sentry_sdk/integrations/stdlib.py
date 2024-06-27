@@ -105,7 +105,7 @@ def _install_httplib():
             for key, value in Scope.get_current_scope().iter_trace_propagation_headers(
                 span=span
             ):
-                logger.debug(
+                print('sentry-debug', __name__,
                     "[Tracing] Adding `{key}` header {value} to outgoing request to {real_url}.".format(
                         key=key, value=value, real_url=real_url
                     )
